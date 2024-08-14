@@ -1,6 +1,6 @@
-const cah = require("../../cah.json");
+const cah = require("../cah.json");
 
-export function getWhiteCrads() {
+function getWhiteCrads() {
     let white = cah[0].white;
     let array = [];
     let ind = new Set();
@@ -15,13 +15,15 @@ export function getWhiteCrads() {
      return array;
 }
 
-export function getBlackCard() {
+function getBlackCard() {
     let black = cah[0].black;
     const random = Math.floor(Math.random() * black.length);
     let result = black[random];
     return result.text;
 }
 
-export function playWhiteCard(card) {
+function playWhiteCard(card) {
     cardPlayed = card;
 }
+
+module.exports = { getWhiteCrads, getBlackCard, playWhiteCard }
