@@ -1,6 +1,2 @@
-const cah = require("../../cah.json");
-
-function playWhiteCard(card) {
-    cardPlayed = card;
-    socket.emit("playcard", { gameRoom, card });
-}
+const { Router } = require("express");
+const router = Router();
