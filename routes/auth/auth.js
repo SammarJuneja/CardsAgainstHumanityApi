@@ -5,3 +5,5 @@ const { createGame, joinGame } = require("../../controllers/authController");
 router.post("/creategame", createGame);
 
 router.post("/joingame", joinGame);
+
+module.exports = router;

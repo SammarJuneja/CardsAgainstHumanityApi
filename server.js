@@ -1,7 +1,7 @@
-const mongoose = require("mongooose");
+const mongoose = require("mongoose");
 const { config } = require("./config");
 
-export function connectDatabase() {
+function connectDatabase() {
     try {
         mongoose.connect(config.MONGO);
         console.log("Successfully connected to database");
@@ -9,3 +9,5 @@ export function connectDatabase() {
         console.log("Error while connecting to database");
     }
 }
+
+module.exports = connectDatabase();

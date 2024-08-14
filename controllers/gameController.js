@@ -26,4 +26,8 @@ function playWhiteCard(card) {
     cardPlayed = card;
 }
 
-module.exports = { getWhiteCrads, getBlackCard, playWhiteCard }
+function selectBlackCard(card) {
+
+}
+
+module.exports = { getWhiteCrads, getBlackCard, playWhiteCard, selectBlackCard }

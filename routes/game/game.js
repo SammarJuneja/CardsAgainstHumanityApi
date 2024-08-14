@@ -1,9 +1,13 @@
 const { Router } = require("express");
 const router = Router();
-const { getWhiteCrads, getBlackCard, playWhiteCard } = require("../../controllers/gameController");
+const { getWhiteCrads, getBlackCard, playWhiteCard, selectBlackCard } = require("../../controllers/gameController");
 
 router.get("/whitecards", getWhiteCrads);
 
 router.get("/blackcards", getBlackCard);
 
-router.get("/playwhitecard", playWhiteCard);
+router.post("/playwhitecard", playWhiteCard);
+
+router.post("/selectblackcard", selectBlackCard);
+
+module.exports = router;
