@@ -1,11 +1,9 @@
 
 
-function createGame() {
+exports.createGame = async (req, res) => {
 
 }
 
-function joinGame() {
+exports.joinGame = async (req, res) => {
 
 }
-
-module.exports = { createGame, joinGame }

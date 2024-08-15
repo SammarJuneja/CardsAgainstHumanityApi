@@ -1,6 +1,6 @@
 const cah = require("../cah.json");
 
-function getWhiteCrads() {
+exports.getWhiteCrads = async (req, res) => {
     let white = cah[0].white;
     let array = [];
     let ind = new Set();
@@ -15,19 +15,16 @@ function getWhiteCrads() {
      return array;
 }
 
-function getBlackCard() {
+exports.getBlackCard = async (req, res) =>  {
     let black = cah[0].black;
     const random = Math.floor(Math.random() * black.length);
     let result = black[random];
     return result.text;
 }
 
-function playWhiteCard(card) {
-    cardPlayed = card;
+exports.playWhiteCard = async (req, res) => {
 }
 
-function selectBlackCard(card) {
+exports.selectBlackCard = async (req, res) => {
 
 }
-
-module.exports = { getWhiteCrads, getBlackCard, playWhiteCard, selectBlackCard }
