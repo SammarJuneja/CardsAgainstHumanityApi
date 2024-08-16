@@ -27,7 +27,8 @@ exports.getBlackCard = async (req, res) =>  {
         const result = black[random];
         res.status(200).json({ "card": result.text });
     } catch (error) {
-
+        res.status(500).json({ "error": "Something went wrong try again later" });
+        console.log(error);
     }
 }
 
