@@ -43,7 +43,7 @@ exports.playWhiteCard = async (req, res) => {
             },
         });
 
-        res.status(200).json({ "message": `$username selected ${card}`});
+        res.status(200).json({ "message": `${username} selected ${card}`});
     } catch (error) {
         res.status(500).json({ "error": "Something went wrong try again later" });
         console.log(error);
