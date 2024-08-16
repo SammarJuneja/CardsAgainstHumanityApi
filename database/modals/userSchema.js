@@ -5,6 +5,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    points: {
+        type: Number
+    },
+    cardPlayed: {
+        type: String
+    },
     room: {
         type: mongoose.Schema.Types.ObjectId
     },

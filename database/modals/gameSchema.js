@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const gameSchema = new mongoose.Schema({
     owner: {
         type: String,
-        required: true,
+        required: true
     },
     participants: [{
         type: String
@@ -11,6 +11,15 @@ const gameSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+    czar: {
+        type: String
+    },
+    blackCard: {
+        type: String
+    },
+    czarCard: {
+        type: String
     },
 });
 
