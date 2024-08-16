@@ -1,17 +1,8 @@
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const mongoose = require("mongoose")
 const { connectDatabase } = require("./database/index.js");
-
 connectDatabase();
-
-// try {
-//     mongoose.connect(config.MONGO);
-//     console.log("Successfully connected to database");
-// } catch (error) {
-//     console.log(`Error while connecting to database ${error}`);
-// }
 
 const auth = require("./routes/auth/index.js");
 const game = require("./routes/game/index.js");
@@ -28,7 +19,21 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    console.log("A user connected");
+    socket.on("connect", (username) => {
+        console.log(`${username} joined the room`);
+    });
+
+    socket.on("disconnect", (username) => {
+        console.log(`${username} left the room`);
+    });
+
+    socket.on("whiteCard", (username, card) => {
+        console.log(`${username} selected ${card}`);
+    });
+
+    socket.on("balckCard", (card) => {
+        console.log(`Czar selected ${card}`);
+    });
 });
 
 server.listen(3000, () => {
