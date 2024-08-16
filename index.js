@@ -19,11 +19,15 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-    socket.on("connect", (username) => {
+    socket.on("create", (username) => {
+        console.log(`${username} created the room`);
+    });
+
+    socket.on("join", (username) => {
         console.log(`${username} joined the room`);
     });
 
-    socket.on("disconnect", (username) => {
+    socket.on("delete", (username) => {
         console.log(`${username} left the room`);
     });
 

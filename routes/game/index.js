@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const validator = require("express-validotor");
+const validator = require("express-validator");
 const router = Router();
 const { getWhiteCrads, getBlackCard, playWhiteCard, czarCard } = require("../../controllers/gameController");
 

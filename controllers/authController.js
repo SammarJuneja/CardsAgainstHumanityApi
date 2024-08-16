@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const User = require("../database/modals/userSchema");
 const Game = require("../database/modals/gameSchema");
 
@@ -24,6 +23,8 @@ exports.createGame = async (req, res) => {
             username: username,
             room: gameRoom._id
         });
+
+        Socket.emit("joinGame", )
 
         res.status(200).json({ "message": `Game room created successfully with password: ${gameRoom._id}` });
     } catch (error) {

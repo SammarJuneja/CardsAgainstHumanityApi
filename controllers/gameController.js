@@ -1,3 +1,5 @@
+const User = require("../database/modals/userSchema");
+const Game = require("../database/modals/gameSchema");
 const cah = require("../cah.json");
 
 exports.getWhiteCrads = async (req, res) => {
