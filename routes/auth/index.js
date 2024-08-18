@@ -3,7 +3,7 @@ const router = Router();
 const { createGame, joinGame, deleteGame } = require("../../controllers/authController");
 const { validationResult, body } = require("express-validator");
 
-router.post("/creategame"
+router.post("/creategame",
     [
         body("username")
             .trim().escape()
@@ -15,10 +15,10 @@ router.post("/creategame"
 router.post("/joingame",
     [
         body("username")
-        .trim().escape()
-        .notEmpty().withMessage("Username is not provided")
+            .trim().escape()
+            .notEmpty().withMessage("Username is not provided")
     ], joinGame);
 
-router.post("/deletegame", deleteGame);
+router.delete("/deletegame/:roomid", deleteGame);
 
 module.exports = router;

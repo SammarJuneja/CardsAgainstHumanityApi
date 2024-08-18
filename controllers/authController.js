@@ -49,11 +49,17 @@ exports.joinGame = async (req, res) => {
             return res.status(404).json({ "error": "Room not found" });
         }
         
-        const userExist = User.findOne({ username: username });
+        const userExist = await User.findOne({ username: username });
 
         if (userExist) {
-            return res.status(401).json({ "error": "User with that name already exists" });
+            return res.json({ "error": "User with that name already exists" });
         }
+
+        const newUser = new User({
+            username: username,
+            room: gameRoom._id
+        });
+        await newUser.save();
 
         await Game.updateOne({
             _id: password,
@@ -67,7 +73,7 @@ exports.joinGame = async (req, res) => {
 
         res.status(200).json({
             "message": `${username} successfully joined the game room`,
-            "user": userExist
+            "user": newUser
         });
     } catch (error) {
         res.status(500).json({ "error": error.message });
@@ -77,12 +83,12 @@ exports.joinGame = async (req, res) => {
 
 exports.deleteGame = async (req, res) => {
     try {
-        const { password } = req.body;
+        const { password } = req.params;
 
         const gameRoom = await Game.findOne({ _id: password });
 
         if (!gameRoom) {
-           return res.status(404).json({ "error": "Room not found" });
+           return res.status(404).json({ "error": "Room was not found" });
         }
 
         await Game.deleteOne({ _id: password });
