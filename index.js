@@ -11,6 +11,8 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+app.set("io", io);
+
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/game", game);
 

@@ -2,6 +2,23 @@ const User = require("../database/modals/userSchema");
 const Game = require("../database/modals/gameSchema");
 const cah = require("../cah.json");
 
+exports.getRoom = async (req, res) => {
+    try {
+        const { roomid } = req.params;
+
+        const roomExists = await Game.findOneById(roomid);
+
+        if (!roomExists) {
+            res.status(404).json({ "error": "Game room was not found" });
+        }
+
+        res.status(200).json({ room: roomExists });
+    } catch (error) {
+        res.status(500).json({ "error": "Something went wrong try again later" });
+        console.log(error);
+    }
+}
+
 exports.getWhiteCrads = async (req, res) => {
     try {
         const white = cah[0].white;

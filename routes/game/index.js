@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const validator = require("express-validator");
 const router = Router();
-const { getWhiteCrads, getBlackCard, playWhiteCard, czarCard } = require("../../controllers/gameController");
+const { getWhiteCrads, getBlackCard, playWhiteCard, czarCard, getRoom } = require("../../controllers/gameController");
+
+router.get("/room/:roomid", getRoom);
 
 router.get("/whitecards", getWhiteCrads);
 

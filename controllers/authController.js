@@ -18,11 +18,13 @@ exports.createGame = async (req, res) => {
             participants: [username],
             name: `${username}'s room`,
         });
+        gameRoom.save();
 
-        await new User({
+        const user = await new User({
             username: username,
             room: gameRoom._id
         });
+        user.save();
 
         Socket.emit("joinGame", )
 
@@ -61,7 +63,14 @@ exports.joinGame = async (req, res) => {
             },
         });
 
-        res.status(200).json({ "message": "You successfully joined the game room" });
+        req.app.get("io").to(gameRoom).emit("join", {
+            user: username
+        });
+
+        res.status(200).json({
+            "message": `${username} successfully joined the game room`,
+            "user": userExist
+        });
     } catch (error) {
         res.status(500).json({ "error": "Something went wrong try again later" });
         console.log(error);

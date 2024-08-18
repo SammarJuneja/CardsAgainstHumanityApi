@@ -21,6 +21,10 @@ const gameSchema = new mongoose.Schema({
     czarCard: {
         type: String
     },
+    active: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const Game = mongoose.model("Game", gameSchema);
