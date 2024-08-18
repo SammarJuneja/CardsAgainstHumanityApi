@@ -1,33 +1,37 @@
+const { validationResult } = require('express-validator');
 const User = require("../database/modals/userSchema");
 const Game = require("../database/modals/gameSchema");
 
 exports.createGame = async (req, res) => {
     try {
-        const { username } = req.body;
+        const errors = validationResult(req);
 
-        const userExist = User.findOne({
-            username: username
-        });
-
-        if (userExist) {
-            res.status(401).json({ "error": "User with that name already exists" });
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
 
-        const gameRoom = await new Game({
+        const { username } = req.body;
+
+        const userExist = await User.findOne({ username: username });
+
+        if (userExist) {
+            return res.status(401).json({ "error": "User with that name already exists" });
+        }
+
+        const gameRoom = new Game({
             owner: username,
             participants: [username],
             name: `${username}'s room`,
         });
-        gameRoom.save();
+        await gameRoom.save();
 
-        const user = await new User({
+        const user = new User({
             username: username,
             room: gameRoom._id
         });
-        user.save();
+        await user.save();
 
-        Socket.emit("joinGame", )
-
+        req.app.get("io").to(gameRoom._id).emit("create", { user: username });
         res.status(200).json({ "message": `Game room created successfully with password: ${gameRoom._id}` });
     } catch (error) {
         res.status(500).json({ "error": "Something went wrong try again later" });
@@ -39,20 +43,16 @@ exports.joinGame = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const gameRoom = await Game.findOne({
-            _id: password
-        });
+        const gameRoom = await Game.findOne({ _id: password });
 
         if (!gameRoom) {
-            res.status(404).json({ "error": "Room not found" });
+            return res.status(404).json({ "error": "Room not found" });
         }
         
-        const userExist = User.findOne({
-            username: username
-        });
+        const userExist = User.findOne({ username: username });
 
         if (userExist) {
-            res.status(401).json({ "error": "User with that name already exists" });
+            return res.status(401).json({ "error": "User with that name already exists" });
         }
 
         await Game.updateOne({
@@ -63,9 +63,7 @@ exports.joinGame = async (req, res) => {
             },
         });
 
-        req.app.get("io").to(gameRoom).emit("join", {
-            user: username
-        });
+        req.app.get("io").to(gameRoom._id).emit("join", { user: username });
 
         res.status(200).json({
             "message": `${username} successfully joined the game room`,
@@ -81,17 +79,13 @@ exports.deleteGame = async (req, res) => {
     try {
         const { password } = req.body;
 
-        const gameRoom = await Game.findOne({
-            _id: password
-        });
+        const gameRoom = await Game.findOne({ _id: password });
 
         if (!gameRoom) {
-            res.status(404).json({ "error": "Room not found" });
+           return res.status(404).json({ "error": "Room not found" });
         }
 
-        await Game.deleteOne({
-            _id: password
-        });
+        await Game.deleteOne({ _id: password });
 
         res.status(200).json({ "message": "You successfully deleted the game room" });
     } catch (error) {

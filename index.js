@@ -13,6 +13,7 @@ const io = new Server(server);
 
 app.set("io", io);
 
+app.use(express.json());
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/game", game);
 
