@@ -6,15 +6,15 @@ exports.getRoom = async (req, res) => {
     try {
         const { roomid } = req.params;
 
-        const roomExists = await Game.findOneById(roomid);
+        const roomExists = await Game.findOne({ _id: roomid });
 
         if (!roomExists) {
-            res.status(404).json({ "error": "Game room was not found" });
+            return res.status(404).json({ "error": "Game room was not found" });
         }
 
         res.status(200).json({ room: roomExists });
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -34,7 +34,7 @@ exports.getWhiteCrads = async (req, res) => {
         }
         res.status(200).send(array);
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -46,7 +46,7 @@ exports.getBlackCard = async (req, res) =>  {
         const result = black[random];
         res.status(200).json({ "card": result.text });
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -65,7 +65,7 @@ exports.playWhiteCard = async (req, res) => {
 
         res.status(200).json({ "message": `${username} selected ${card}`});
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -95,12 +95,12 @@ exports.czarCard = async (req, res) => {
                 _id: winner.room
             });
 
-            res.status(200).json({ "message": `${winner.username} won this match`});
+            return res.status(200).json({ "message": `${winner.username} won this match`});
         }
 
         res.status(200).json({ "message": `${winner.username} won`});
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }

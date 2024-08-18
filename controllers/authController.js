@@ -34,7 +34,7 @@ exports.createGame = async (req, res) => {
         req.app.get("io").to(gameRoom._id).emit("create", { user: username });
         res.status(200).json({ "message": `Game room created successfully with password: ${gameRoom._id}` });
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -70,7 +70,7 @@ exports.joinGame = async (req, res) => {
             "user": userExist
         });
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
@@ -89,7 +89,7 @@ exports.deleteGame = async (req, res) => {
 
         res.status(200).json({ "message": "You successfully deleted the game room" });
     } catch (error) {
-        res.status(500).json({ "error": "Something went wrong try again later" });
+        res.status(500).json({ "error": error.message });
         console.log(error);
     }
 }
