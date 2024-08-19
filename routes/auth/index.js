@@ -19,6 +19,6 @@ router.post("/joingame",
             .notEmpty().withMessage("Username is not provided")
     ], joinGame);
 
-router.delete("/deletegame/:roomid", deleteGame);
+router.delete("/deletegame/:password", deleteGame);
 
 module.exports = router;
