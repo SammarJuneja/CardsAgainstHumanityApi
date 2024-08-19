@@ -30,7 +30,11 @@ io.on("connection", (socket) => {
         console.log(`${username} joined the room`);
     });
 
-    socket.on("delete", (username) => {
+    socket.on("delete", () => {
+        console.log("The game room was deleted");
+    });
+
+    socket.on("leave", (username) => {
         console.log(`${username} left the room`);
     });
 
@@ -38,7 +42,7 @@ io.on("connection", (socket) => {
         console.log(`${username} selected ${card}`);
     });
 
-    socket.on("balckCard", (card) => {
+    socket.on("blackCard", (card) => {
         console.log(`Czar selected ${card}`);
     });
 });
